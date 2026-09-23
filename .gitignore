@@ -1,0 +1,26 @@
+# Secrets. Never commit these.
+.streamlit/secrets.toml
+*.key
+*.json
+
+# Virtual environments
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Scraped event data. Large, and not ours to publish.
+match_cache/
+soccerdata/
+
+# Run logs
+run_log.txt
+
+# The CSVs in output/ ARE committed on purpose: they are what the app reads.
+# Everything else in there is not.
+output/schedule.csv
+output/failed_matches.txt
+output/match_level_long.csv.bak
+
+old/
+downloaded_files/
