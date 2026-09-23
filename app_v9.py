@@ -69,7 +69,7 @@ METRICS = {
                        "Share of all shots in their matches. Attacking dominance."),
     "box_touches_pm": ("Touches in opposition box per match", False, 1,
                        "How often they reach dangerous areas."),
-    "buildup_touches_per_box_shot": ("Box touches per shot", True, 1,
+    "box_touches_per_shot": ("Box touches per shot", True, 1,
                              "How much box presence it takes to produce one attempt."),
     "shots_in_box_pct": ("Shots from inside the box %", False, 1,
                          "Share of attempts taken from good positions."),
@@ -93,23 +93,14 @@ METRICS = {
     "goals_pm": ("Goals per match", False, 2, "Goals scored."),
 
     # Route to goal
+    "crosses_per_shot": ("Crosses per shot", True, 2,
+                         "How cross-dependent the attack is."),
     "crosses_pm": ("Crosses per match", False, 1, "Open-play crosses attempted."),
-    "crosses_per100_ft": ("Crosses per 100 final-third passes", False, 1,
-                          "How much of their attacking play is crossing."),
-    "through_balls_per100_ft": ("Through balls per 100 final-third passes", False, 2,
-                                "How much of their attacking play splits the defence."),
-    "progressive_passes_pm": ("Progressive passes per match", False, 1,
-                              "Completed passes in the attacking two-thirds that move "
-                              "the ball at least 25% closer to goal."),
-    "progressive_pass_share_pct": ("Progressive pass share %", False, 1,
-                                   "Progressive passes as a share of completed passes."),
-    "long_pass_accuracy_pct": ("Long pass accuracy %", False, 1,
-                               "Long passes that find a teammate."),
-    "final_third_pass_accuracy_pct": ("Final-third pass accuracy %", False, 1,
-                                      "Completion in the hardest area to pass in."),
     "cross_accuracy_pct": ("Cross completion %", False, 1, "Crosses that find a teammate."),
     "through_balls_pm": ("Through balls per match", False, 1,
                          "Passes played between defenders."),
+    "forward_pass_share_pct": ("Forward pass share %", False, 1,
+                               "Forward passes as a share of forward, sideways and backward."),
     "long_ball_share_pct": ("Long ball share %", False, 1,
                             "Long passes as a share of all passes."),
     "pass_accuracy_pct": ("Pass accuracy %", False, 1,
@@ -129,8 +120,6 @@ METRICS = {
     "take_ons_pm": ("Take-ons attempted per match", False, 1, "Attempts to beat a man."),
     "fouls_won_pm": ("Fouls won per match", False, 1, "Free kicks earned."),
     "fouls_pm": ("Fouls committed per match", True, 1, "Free kicks given away."),
-    "missed_tackles_pm": ("Missed tackles per match", True, 1,
-                          "Beaten by a dribble, or fouling while trying to tackle."),
 
     # Defence
     "shots_faced_pm": ("Shots faced per match", True, 1, "Opponent attempts."),
@@ -147,42 +136,10 @@ METRICS = {
                              "Share of opponent shots on target taken from close range."),
     "conceded_in_box_pct": ("Goals conceded from inside the box %", True, 1,
                             "Share of goals against scored from close range."),
-    "sequences_pm": ("Passages of play per match", False, 0,
-                     "How many separate spells of possession they have."),
-    "passes_per_sequence": ("Passes per passage", False, 2,
-                            "How long their spells of possession run."),
-    "direct_speed": ("Direct speed", False, 2,
-                     "Metres moved towards goal per second of possession. "
-                     "Higher means they go forward faster when they have it."),
-    "sequence_start_distance_m": ("Average start distance", False, 1,
-                                  "Metres from their own goal where their "
-                                  "passages of play begin. Higher means they "
-                                  "win the ball further up."),
-    "build_up_attacks_pm": ("Build-up attacks per match", False, 1,
-                            "Open-play passages of ten or more passes that reach "
-                            "the box or end in a shot."),
-    "direct_attacks_pm": ("Direct attacks per match", False, 1,
-                          "Passages from their own half that move at least half "
-                          "their distance towards goal and reach the box or a shot."),
-    "high_turnovers_pm": ("High turnovers per match", False, 1,
-                          "Possessions won within 40 metres of the opponent's goal."),
-    "high_turnover_shots_pm": ("High turnovers ending in a shot per match", False, 2,
-                               "Winning it high and getting an attempt away."),
-    "pressed_opponent_pm": ("Opponent passages pressed per match", False, 1,
-                            "Opponent spells that started deep, lasted three "
-                            "passes or fewer and never left their own half."),
-    "shot_ending_share_pct": ("Passages ending in a shot %", False, 1,
-                              "Share of their spells of possession that produce "
-                              "an attempt."),
-    "ppda": ("PPDA", True, 1,
-             "Opponent passes outside their own third, per defensive action of ours "
-             "outside our own third. Lower means they press harder."),
-    "pressing_actions_pm": ("Pressing actions per match", False, 1,
-                            "Tackles, interceptions, challenges, blocked passes and "
-                            "fouls: trying to win the ball back."),
-    "recovery_actions_pm": ("Recovery actions per match", False, 1,
-                            "Clearances and loose-ball recoveries: dealing with "
-                            "danger rather than hunting the ball."),
+    "ppda": ("Opponent passes per defensive action", True, 1,
+             "Lower means they press higher and harder."),
+    "def_actions_pm": ("Defensive actions per match", False, 1,
+                       "Tackles, interceptions, clearances and recoveries."),
     "goal_diff": ("Goal difference", False, 0, "Scored minus conceded."),
 }
 
@@ -195,20 +152,20 @@ SECTIONS = {
         "passes_opp_half_pm", "pass_accuracy_pct"],
     "Do they create?": [
         "chances_pm", "shots_pm", "shot_share_pct", "box_touches_pm",
-        "buildup_touches_per_box_shot", "shots_in_box_pct", "shots_per_chance"],
+        "box_touches_per_shot", "shots_in_box_pct", "shots_per_chance"],
     "Do they finish?": [
         "on_target_pct", "blocked_share_pct", "conversion_pct", "goals_per_sot_pct",
         "shots_per_goal", "chances_per_goal", "goals_in_box_pct", "goals_pm"],
     "How do they attack?": [
-        "crosses_per100_ft", "crosses_pm", "cross_accuracy_pct", "through_balls_pm",
-        "progressive_passes_pm", "long_ball_share_pct"],
+        "crosses_per_shot", "crosses_pm", "cross_accuracy_pct", "through_balls_pm",
+        "forward_pass_share_pct", "long_ball_share_pct"],
     "Do they win the ball?": [
         "duel_win_pct", "duels_contested_pm", "aerial_success_pct", "ground_duel_success_pct",
         "take_on_success_pct", "fouls_won_pm", "fouls_pm"],
     "Do they defend?": [
         "shots_faced_pm", "sot_faced_pm", "conceded_pm", "goals_per_sot_faced_pct",
         "shots_faced_per_goal", "box_shots_faced_pct", "sot_faced_in_box_pct",
-        "conceded_in_box_pct", "clean_sheet_pct", "ppda", "pressing_actions_pm"],
+        "conceded_in_box_pct", "clean_sheet_pct", "ppda", "def_actions_pm"],
 }
 
 PRESETS = {
@@ -221,15 +178,9 @@ PRESETS = {
     "Control and territory": [
         "possession_pct", "field_tilt_pct", "box_touch_share_pct",
         "passes_opp_half_pm", "pass_accuracy_pct"],
-    "How they attack": [
-        "build_up_attacks_pm", "direct_attacks_pm", "passes_per_sequence",
-        "direct_speed", "shot_ending_share_pct", "sequences_pm"],
-    "Winning it back": [
-        "high_turnovers_pm", "high_turnover_shots_pm", "pressed_opponent_pm",
-        "sequence_start_distance_m", "ppda", "pressing_actions_pm"],
     "Route to goal": [
-        "crosses_per100_ft", "crosses_pm", "through_balls_pm",
-        "progressive_passes_pm", "long_ball_share_pct", "buildup_touches_per_box_shot"],
+        "crosses_per_shot", "crosses_pm", "through_balls_pm",
+        "forward_pass_share_pct", "long_ball_share_pct", "box_touches_per_shot"],
     "Duels and physicality": [
         "duel_win_pct", "aerial_success_pct", "ground_duel_success_pct",
         "take_on_success_pct", "duels_pm", "fouls_pm"],
@@ -243,40 +194,8 @@ PRESETS = {
 
 HEADLINE_PROFILE = ["possession_pct", "field_tilt_pct", "shot_share_pct", "shots_pm",
                     "chances_pm", "box_touches_pm", "on_target_pct", "conversion_pct",
-                    "crosses_per100_ft", "progressive_passes_pm", "duel_win_pct",
+                    "crosses_per_shot", "forward_pass_share_pct", "duel_win_pct",
                     "shots_faced_pm", "conceded_pm", "clean_sheet_pct", "ppda"]
-
-
-# Metrics that describe how a team plays rather than how well. There is no best
-# value for these, so the app shows them without a rank and keeps them out of
-# strengths and weaknesses. A side can cross constantly or barely press and be
-# excellent at either.
-STYLE_METRICS = {
-    "possession_pct", "field_tilt_pct", "touches_pm", "final_third_passes_pm",
-    "passes_into_final_third_pm", "crosses_pm", "crosses_per100_ft",
-    "through_balls_pm", "through_balls_per100_ft", "long_ball_share_pct",
-    "progressive_pass_share_pct", "buildup_touches_per_box_shot",
-    "shots_per_chance", "take_ons_pm", "duels_contested_pm", "ppda",
-    "pressing_actions_pm", "recovery_actions_pm",
-    "sequences_pm", "passes_per_sequence", "direct_speed",
-    "build_up_attacks_pm", "direct_attacks_pm",
-}
-
-# Figures that are close enough to be useful but should not be quoted against a
-# published number.
-APPROXIMATE = {
-    "possession_pct": "Approximated from share of touches, since events carry no "
-                      "duration. Fine for comparing teams, not an official figure.",
-    "chances_pm": "Counts openings, not their quality. Without expected goals, a "
-                  "tap-in and a hopeful ball across the box look identical.",
-    "chances_per_goal": "Built on chances created, which carries no quality measure.",
-    "duels_contested_pm": "Built from Opta's five duel types. Comparable across this "
-                          "app, close to but not identical to published duel counts.",
-}
-
-
-def is_style(m: str) -> bool:
-    return m in STYLE_METRICS
 
 
 SCATTERS = {
@@ -284,11 +203,7 @@ SCATTERS = {
     "Shot volume against shot quality": ("shots_pm", "on_target_pct"),
     "Possession against shot share": ("possession_pct", "shot_share_pct"),
     "Territory against goals": ("field_tilt_pct", "goals_pm"),
-    "Crossing against conversion": ("crosses_per100_ft", "conversion_pct"),
-    "Progression against goals": ("progressive_passes_pm", "goals_pm"),
-    "Build-up against directness": ("build_up_attacks_pm", "direct_attacks_pm"),
-    "Winning it high against scoring": ("high_turnovers_pm", "goals_pm"),
-    "Possession length against shots": ("passes_per_sequence", "shots_pm"),
+    "Crossing against conversion": ("crosses_per_shot", "conversion_pct"),
     "Pressing against goals conceded": ("ppda", "conceded_pm"),
     "Box presence against goals": ("box_touches_pm", "goals_pm"),
 }
@@ -319,8 +234,8 @@ PLAYER_RATES = {
     "aerial_win": ("Aerial win %", "aerials_won_for", "aerials_for", 10, True),
     "pass_accuracy": ("Pass accuracy %", "passes_completed_for",
                       "passes_attempted_for", 100, True),
-    "player_box_touches_per_shot": ("Box touches per shot", "touches_opp_box_for",
-                                    "shots_for", 8, False),
+    "box_touches_per_shot": ("Box touches per shot", "touches_opp_box_for",
+                             "shots_for", 8, False),
     "shots_per_chance": ("Shots per chance created", "shots_for",
                          "chances_created_for", 5, False),
 }
@@ -337,7 +252,7 @@ RELATED_RATES = {
     "aerials_won_for": ["aerial_win"],
     "passes_attempted_for": ["pass_accuracy"],
     "chances_created_for": ["shots_per_chance"],
-    "touches_opp_box_for": ["player_box_touches_per_shot"],
+    "touches_opp_box_for": ["box_touches_per_shot"],
 }
 
 
@@ -396,15 +311,8 @@ def derive(df: pd.DataFrame, rank: bool = True) -> pd.DataFrame:
     d["touches_pm"] = div(col(d, "touches_for"), m)
 
     # Control
-    # Field tilt on its standard definition: share of final-third passes.
-    ft_for = col(d, "passes_final_third_for")
-    ft_against = col(d, "passes_final_third_against")
-    if ft_for.isna().all():
-        ft_for, ft_against = col(d, "passes_opp_half_for"), col(d, "passes_opp_half_against")
-    d["field_tilt_pct"] = div(ft_for, ft_for + ft_against) * 100
-    d["final_third_passes_pm"] = div(ft_for, m)
-    d["passes_into_final_third_pm"] = div(col(d, "passes_into_final_third_for"), m)
-    d["final_third_pass_accuracy_pct"] = col(d, "final_third_pass_accuracy_pct_for")
+    d["field_tilt_pct"] = div(col(d, "passes_opp_half_for"),
+                              col(d, "passes_opp_half_for") + col(d, "passes_opp_half_against")) * 100
     d["box_touch_share_pct"] = div(col(d, "touches_opp_box_for"),
                                    col(d, "touches_opp_box_for") + col(d, "touches_opp_box_against")) * 100
     d["passes_opp_half_pm"] = div(col(d, "passes_opp_half_for"), m)
@@ -414,11 +322,7 @@ def derive(df: pd.DataFrame, rank: bool = True) -> pd.DataFrame:
     d["shots_pm"] = div(shots, m)
     d["shot_share_pct"] = div(shots, shots + faced) * 100
     d["box_touches_pm"] = div(col(d, "touches_opp_box_for"), m)
-    # The shot is itself a touch in the box, so it comes out of the numerator,
-    # and only shots taken in the box belong in the denominator.
-    box_shots = col(d, "shots_in_box_for")
-    d["buildup_touches_per_box_shot"] = div(
-        col(d, "touches_opp_box_for") - box_shots, box_shots)
+    d["box_touches_per_shot"] = div(col(d, "touches_opp_box_for"), shots)
     d["shots_in_box_pct"] = div(col(d, "shots_in_box_for"), shots) * 100
     chances = col(d, "chances_created_for")
     d["chances_pm"] = div(chances, m)
@@ -438,18 +342,14 @@ def derive(df: pd.DataFrame, rank: bool = True) -> pd.DataFrame:
     # Route
     crosses = col(d, "crosses_attempted_for")
     d["crosses_pm"] = div(crosses, m)
-    # Mix metrics share one denominator, so crossing and through balls can be
-    # read against each other.
-    d["crosses_per100_ft"] = div(crosses, ft_for) * 100
-    d["through_balls_per100_ft"] = div(col(d, "through_balls_for"), ft_for) * 100
+    d["crosses_per_shot"] = div(crosses, shots)
     d["cross_accuracy_pct"] = col(d, "cross_accuracy_pct_for")
     d["through_balls_pm"] = div(col(d, "through_balls_for"), m)
-    progressive = col(d, "progressive_passes_for")
-    d["progressive_passes_pm"] = div(progressive, m)
-    d["progressive_pass_share_pct"] = div(progressive, col(d, "passes_completed_for")) * 100
+    fwd, back, side = (col(d, "passes_forward_for"), col(d, "passes_backward_for"),
+                       col(d, "passes_sideways_for"))
+    d["forward_pass_share_pct"] = div(fwd, fwd + back + side) * 100
     d["long_ball_share_pct"] = div(col(d, "long_passes_attempted_for"),
                                    col(d, "passes_attempted_for")) * 100
-    d["long_pass_accuracy_pct"] = col(d, "long_pass_accuracy_pct_for")
 
     # Duels
     aerials, aerials_won = col(d, "aerials_for"), col(d, "aerials_won_for")
@@ -467,7 +367,6 @@ def derive(df: pd.DataFrame, rank: bool = True) -> pd.DataFrame:
     d["take_ons_pm"] = div(col(d, "take_ons_for"), m)
     d["fouls_won_pm"] = div(col(d, "fouls_won_for"), m)
     d["fouls_pm"] = div(col(d, "fouls_committed_for"), m)
-    d["missed_tackles_pm"] = div(col(d, "missed_tackles_for"), m)
 
     # Defence
     d["shots_faced_pm"] = div(faced, m)
@@ -481,41 +380,15 @@ def derive(df: pd.DataFrame, rank: bool = True) -> pd.DataFrame:
     tackles, ints = col(d, "tackles_for"), col(d, "interceptions_for")
     clears, recov = col(d, "clearances_for"), col(d, "ball_recoveries_for")
     actions = tackles + ints + clears + recov
-    # Sequences. Each sequence's numbers sit on its first event, so these sums
-    # are already grouped correctly by time block and game state.
-    seqs = col(d, "sequences_for")
-    d["sequences_pm"] = div(seqs, m)
-    d["passes_per_sequence"] = div(col(d, "sequence_passes_for"), seqs)
-    d["direct_speed"] = div(col(d, "sequence_progress_m_for"),
-                            col(d, "sequence_seconds_for"))
-    d["sequence_start_distance_m"] = div(col(d, "sequence_start_x_m_for"), seqs)
-    d["build_up_attacks_pm"] = div(col(d, "build_up_attacks_for"), m)
-    d["direct_attacks_pm"] = div(col(d, "direct_attacks_for"), m)
-    d["high_turnovers_pm"] = div(col(d, "high_turnovers_for"), m)
-    d["high_turnover_shots_pm"] = div(col(d, "high_turnover_shots_for"), m)
-    d["shot_ending_share_pct"] = div(col(d, "shot_ending_sequences_for"), seqs) * 100
-    # Their sequences that we pressed are recorded on the opponent's side.
-    d["pressed_opponent_pm"] = div(col(d, "sequence_pressed_against"), m)
-
-    d["pressing_actions_pm"] = div(col(d, "pressing_actions_for"), m)
-    d["recovery_actions_pm"] = div(col(d, "recovery_actions_for"), m)
-
-    # Opta's PPDA: opposition passes outside their own defensive third, divided
-    # by our defensive actions outside ours. Older files fall back to the rough
-    # version so the app still runs against them.
-    press_zone = col(d, "pressing_actions_outside_own_third_for")
-    allowed = col(d, "passes_outside_own_third_against")
-    if press_zone.isna().all() or allowed.isna().all():
-        allowed = col(d, "passes_attempted_against")
-        press_zone = (col(d, "tackles_for") + col(d, "interceptions_for")
-                      + col(d, "fouls_committed_for"))
-    d["ppda"] = div(allowed, press_zone)
+    d["def_actions_pm"] = div(actions, m)
+    d["ppda"] = div(col(d, "passes_attempted_against"),
+                    tackles + ints + col(d, "fouls_committed_for"))
 
     if not rank:
         return d.copy()
 
     # Ranks within each split. 1 is always the best, direction aware.
-    present = [m for m in METRICS if m in d.columns and not is_style(m)]
+    present = [m for m in METRICS if m in d.columns]
     ranks = pd.concat(
         [d.groupby("split_value", observed=True)[m]
          .rank(ascending=lower_better(m), method="min").rename(f"rank__{m}")
@@ -603,15 +476,11 @@ def profile_table(row: pd.Series, peers: pd.DataFrame, metrics: list[str],
             "Metric": lbl(metric),
             "Value": round(float(row[metric]), dec(metric)),
             "League avg": round(float(avg), dec(metric)),
-            "Rank": ("style, not better or worse" if is_style(metric)
-                     else f"{int(rank)}/{n}" if pd.notna(rank) else ""),
+            "Rank": f"{int(rank)}/{n}" if pd.notna(rank) else "",
         }
         if not compact:
             entry["Gap"] = round(float(row[metric] - avg), dec(metric))
-            note = METRICS[metric][3]
-            if metric in APPROXIMATE:
-                note = f"{note} {APPROXIMATE[metric]}"
-            entry["What it measures"] = note
+            entry["What it measures"] = METRICS[metric][3]
         out.append(entry)
     return pd.DataFrame(out)
 
@@ -738,9 +607,6 @@ Rules:
 - Connect metrics to each other where the data supports it. Say what kind of team
   this is and where the numbers disagree with each other.
 - Plain declarative sentences. No em dashes anywhere. No hedging filler.
-- Metrics marked as style have no better or worse value. Describe what they say
-  about how the team plays. Never call a style figure a strength or a weakness.
-- Where a metric carries a caveat, respect it. Do not present it as exact.
 - If the sample is small, one short sentence at the end saying so.
 - No headings, no bullets, no preamble."""
 
@@ -847,9 +713,8 @@ def page_splits(data: dict, team: str, kind: str, compact: bool, use_ai: bool) -
                    "conversion_pct", "box_touches_pm", "goals_pm"],
         "Defence": ["shots_faced_pm", "sot_faced_pm", "box_shots_faced_pct",
                     "conceded_pm", "goals_per_sot_faced_pct", "possession_pct"],
-        "Route to goal": ["build_up_attacks_pm", "direct_attacks_pm",
-                          "passes_per_sequence", "crosses_per100_ft",
-                          "progressive_passes_pm", "buildup_touches_per_box_shot"],
+        "Route to goal": ["crosses_per_shot", "crosses_pm", "through_balls_pm",
+                          "forward_pass_share_pct", "box_touches_per_shot"],
     }
     metrics = [m for m in sets[view] if m in rows.columns]
     if compact:
@@ -901,8 +766,7 @@ def page_focus(data: dict, team: str, compact: bool, use_ai: bool) -> None:
     st.header(f"{team} against the other nineteen")
 
     ranked = [(m, int(row[f"rank__{m}"])) for m in HEADLINE_PROFILE
-              if not is_style(m) and f"rank__{m}" in row
-              and pd.notna(row.get(f"rank__{m}"))]
+              if f"rank__{m}" in row and pd.notna(row.get(f"rank__{m}"))]
     ranked.sort(key=lambda kv: kv[1])
 
     cols = st.columns(1 if compact else 2)
@@ -918,8 +782,6 @@ def page_focus(data: dict, team: str, compact: bool, use_ai: bool) -> None:
                         f"(league average {totals[m].mean():.{dec(m)}f})")
 
     st.subheader("Rank across the headline measures")
-    st.caption("Only measures with a better and worse value appear here. How they "
-               "play, such as possession, crossing or pressing, is on the other pages.")
     prof = pd.DataFrame({"Rank": [r for _, r in ranked]},
                         index=[lbl(m) for m, _ in ranked])
     st.bar_chart(prof)
@@ -990,8 +852,8 @@ def page_matches(data: dict, team: str, compact: bool) -> None:
                         "box_shots_faced_pct"],
             "Control": ["possession_pct", "field_tilt_pct", "shot_share_pct",
                         "box_touches_pm"],
-            "Route to goal": ["progressive_passes_pm", "crosses_pm",
-                              "crosses_per100_ft", "through_balls_pm"]}
+            "Route to goal": ["crosses_per_shot", "crosses_pm", "through_balls_pm",
+                              "forward_pass_share_pct"]}
     metrics = [m for m in sets[view] if m in mine.columns]
     if compact:
         metrics = metrics[:3]
@@ -1143,7 +1005,7 @@ def page_players(data: dict, team: str, compact: bool) -> None:
             st.info(f"Nobody has reached {min_den} {lbl(den).lower()} yet, so this rate "
                     "would be noise.")
             return
-        ascending = key == "player_box_touches_per_shot"
+        ascending = key == "box_touches_per_shot"
         d = d.sort_values("value", ascending=ascending).head(15)
 
         cols = {"player": "Player", "team": "Team", "minutes": "Minutes",
@@ -1235,13 +1097,7 @@ def page_league(data: dict, team: str, compact: bool) -> None:
         shown = [sort_by] + shown[:-1]
 
     st.dataframe(preset_table(sub, shown, sort_by), hide_index=True, width="stretch")
-    if is_style(sort_by):
-        st.caption("Sorted by the most of it. This measures how a team plays rather "
-                   "than how well, so the top of the table is not the best place "
-                   "to be.")
-    else:
-        st.caption("Sorted best first.")
-    st.caption(" | ".join(
+    st.caption("Sorted best first. " + " | ".join(
         f"{lbl(m)}: {METRICS[m][3]}" for m in shown))
 
     st.subheader(f"{lbl(sort_by)} across the league")

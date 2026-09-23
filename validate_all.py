@@ -148,6 +148,9 @@ def check_invariants(w: pd.DataFrame) -> None:
                       if f"goals_from_shots_{side}" in w.columns else f"goals_{side}")
         at_most(f"Goals from shots never exceed shots on target ({side})",
                 shot_goals, f"shots_on_target_{side}")
+        if f"shots_blocked_{side}" in w.columns:
+            at_most(f"Blocked shots never exceed shots ({side})",
+                    f"shots_blocked_{side}", f"shots_{side}")
         if f"goals_from_shots_{side}" in w.columns:
             at_most(f"Goals from shots never exceed total goals ({side})",
                     f"goals_from_shots_{side}", f"goals_{side}")
@@ -163,6 +166,8 @@ def check_invariants(w: pd.DataFrame) -> None:
                 f"aerials_won_{side}", f"aerials_{side}")
         at_most(f"Shots in box never exceed shots ({side})",
                 f"shots_in_box_{side}", f"shots_{side}")
+        at_most(f"Duels won never exceed duels contested ({side})",
+                f"duels_won_{side}", f"duels_contested_{side}")
         at_most(f"Chances created never exceed passes ({side})",
                 f"chances_created_{side}", f"passes_attempted_{side}")
 
@@ -170,6 +175,22 @@ def check_invariants(w: pd.DataFrame) -> None:
 # --------------------------------------------------------------------------
 # LAYER 2: CONSISTENCY
 # --------------------------------------------------------------------------
+def check_duel_balance(w: pd.DataFrame) -> None:
+    """Every duel has a winner and a loser, so across the league the duels won
+    must come to about half the duels contested. A long way off means the two
+    sides of some pairing are not both being counted."""
+    if "duels_won_for" not in w.columns or "duels_contested_for" not in w.columns:
+        record("League-wide duels won is about half of duels contested", True,
+               "columns absent, skipped")
+        return
+    won = w["duels_won_for"].sum()
+    contested = w["duels_contested_for"].sum()
+    share = won / contested if contested else 0
+    ok = 0.45 <= share <= 0.55
+    record("League-wide duels won is about half of duels contested", ok,
+           f"{share:.1%} of {int(contested)} contested")
+
+
 def check_consistency(long_df: pd.DataFrame) -> None:
     print("\n2. CONSISTENCY: splits, perspectives and players")
 
@@ -252,13 +273,16 @@ def recount(path: Path) -> pd.DataFrame:
         shot_types = {"MissedShots", "ShotOnPost", "SavedShot", "Goal"}
         blocked = quals.apply(lambda s: "Blocked" in s)
         own = quals.apply(lambda s: "OwnGoal" in s)
+        not_a_pass = quals.apply(
+            lambda s: bool({"Cross", "ThrowIn", "KeeperThrow"} & s))
         rows.append({
             "match_id": int(ev["game_id"].iloc[0]),
             "team": team,
             "shots": int((m & types.isin(shot_types)).sum()),
             "goals_from_shots": int((m & types.eq("Goal") & ~own).sum()),
-            "passes_attempted": int((m & types.eq("Pass")).sum()),
-            "passes_completed": int((m & types.eq("Pass") &
+            # Opta's pass: crosses, throw-ins and keeper throws do not count.
+            "passes_attempted": int((m & types.eq("Pass") & ~not_a_pass).sum()),
+            "passes_completed": int((m & types.eq("Pass") & ~not_a_pass &
                                      outcomes.eq("Successful")).sum()),
             "shots_blocked": int((m & types.eq("SavedShot") & blocked).sum()),
             "aerials": int((m & types.eq("Aerial")).sum()),
@@ -413,6 +437,7 @@ def main() -> None:
           f"{w['team'].nunique()} teams, {len(w)} team-match rows.")
 
     check_invariants(w)
+    check_duel_balance(w)
     check_consistency(long_df)
     check_recount(long_df)
     check_scores(long_df)
