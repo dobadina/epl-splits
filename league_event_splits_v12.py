@@ -153,7 +153,7 @@ FOCUS_TEAM = "Manchester United"   # matched loosely against the event data name
 MAX_MATCHES = None                 # set to e.g. 5 for a test run
 PAUSE_SECONDS = 2
 RETRY_FAILED = True
-DOWNLOAD = False                   # set False to re-process the cache without scraping
+DOWNLOAD = True                   # set False to re-process the cache without scraping
 
 SKIP_UNPLAYED = True               # never request fixtures that have not kicked off
 MIN_HOURS_AFTER_KICKOFF = 3        # wait this long after kick-off before fetching
