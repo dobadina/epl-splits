@@ -278,7 +278,8 @@ def recount(path: Path) -> pd.DataFrame:
         rows.append({
             "match_id": int(ev["game_id"].iloc[0]),
             "team": team,
-            "shots": int((m & types.isin(shot_types)).sum()),
+            # Own goals are not shots, which is how the pipeline counts them.
+            "shots": int((m & types.isin(shot_types) & ~own).sum()),
             "goals_from_shots": int((m & types.eq("Goal") & ~own).sum()),
             # Opta's pass: crosses, throw-ins and keeper throws do not count.
             "passes_attempted": int((m & types.eq("Pass") & ~not_a_pass).sum()),
